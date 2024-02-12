@@ -20,17 +20,12 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String query = req.getQueryString();
-        String[] parameters = query.split("&");
-        Map<String, String> mapParameters = new HashMap<>();
 
-        for (String s : parameters) {
-            String parameter = s.substring(5, s.length());
-            String key = s.substring(0, 4);
-            mapParameters.put(key, parameter);
-        }
+        double num1 = Double.parseDouble(req.getParameter("num1"));
+        double num2 = Double.parseDouble(req.getParameter("num2"));
+        String type = req.getParameter("type");
 
-        Operation operation = new Operation(Double.parseDouble(mapParameters.get("num1")), Double.parseDouble(mapParameters.get("num2")), mapParameters.get("type"));
+        Operation operation = new Operation(num1, num2, type);
         Operation calculate = operationService.calculate(operation);
 
         String result = "Result = " + calculate.getResult();
